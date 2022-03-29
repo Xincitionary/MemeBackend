@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import pymysql 
+import os
 
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,17 +78,26 @@ WSGI_APPLICATION = 'meme.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'memedb',
+#         'USER':'admin',
+#         'PASSWORD':'citang2022',
+#         'HOST':'memedb.cfjhvj4yy4z8.us-east-1.rds.amazonaws.com',
+#         'PORT':3306,
+#          'OPTIONS': {
+#         'sql_mode': 'traditional',
+#     }
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'memedb',
-        'USER':'admin',
-        'PASSWORD':'citang2022',
-        'HOST':'memedb.cfjhvj4yy4z8.us-east-1.rds.amazonaws.com',
-        'PORT':3306,
-         'OPTIONS': {
-        'sql_mode': 'traditional',
-    }
+        'OPTIONS': {
+            'read_default_file': os.path.join(BASE_DIR, 'mysql.cnf'),
+        },
     }
 }
 
