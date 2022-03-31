@@ -24,3 +24,31 @@ class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+
+# class StoryViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows groups to be viewed or edited.
+#     """
+#     queryset = Topic.objects.all()
+#     serializer_class = StorySerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+# class FeedViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows groups to be viewed or edited.
+#     """
+#     queryset = Topic.objects.all()
+#     serializer_class = FeedSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+
+
+# class CommentViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows groups to be viewed or edited.
+#     """
+#     queryset = Topic.objects.all()
+#     serializer_class = CommentSerializer
+#     permission_classes = [permissions.IsAuthenticated]

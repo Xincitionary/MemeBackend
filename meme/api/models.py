@@ -1,3 +1,4 @@
+from unittest.mock import DEFAULT
 from django.db import models
 
 #on_delete: https://stackoverflow.com/questions/38388423/what-does-on-delete-do-on-django-models
@@ -20,7 +21,7 @@ class UserInfo(models.Model):
     email = models.CharField(max_length=255)
     gender = models.CharField(max_length=15)
     bio = models.CharField(max_length=100)
-    userID = models.ForeignKey(UserLogin, on_delete = models.CASCADE)
+    user = models.ForeignKey(UserLogin, on_delete = models.CASCADE)
     school = models.CharField(max_length=45)
     degree = models.CharField(max_length=45)
     num_following = models.IntegerField()
@@ -34,13 +35,13 @@ class UserInfo(models.Model):
         return f"{self.id}: {self.bio}"
 
 class UserFollowing(models.Model):
-    userID = models.ForeignKey(UserLogin, related_name="following", on_delete=models.CASCADE)
-    followingID = models.ForeignKey(UserLogin, related_name="followers", on_delete=models.CASCADE)
+    user = models.ForeignKey(UserLogin, related_name="following", on_delete=models.CASCADE)
+    following = models.ForeignKey(UserLogin, related_name="followers", on_delete=models.CASCADE)
 
 
 class Topic(models.Model):
     #topic id
-    creatorID =models.ForeignKey(UserLogin, on_delete=models.CASCADE)
+    creator =models.ForeignKey(UserLogin, on_delete=models.CASCADE)
     num_followers = models.IntegerField()
     num_feeds = models.IntegerField()
     num_stories = models.IntegerField()
@@ -53,13 +54,13 @@ class Topic(models.Model):
         return ret
 
 class TopicModerator(models.Model):
-    userID = models.ForeignKey(UserLogin, related_name="moderator", on_delete=models.CASCADE)
-    topicID = models.ForeignKey(Topic, related_name="topicModerated", on_delete = models.CASCADE)
+    user = models.ForeignKey(UserLogin, related_name="moderator", on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, related_name="topicModerated", on_delete = models.CASCADE)
 
 
 class FollowTopic(models.Model):
-    userID = models.ForeignKey(UserLogin, related_name="userFollowing", on_delete = models.CASCADE)
-    topicID = models.ForeignKey(Topic, related_name="topicFollowed", on_delete = models.CASCADE)
+    user = models.ForeignKey(UserLogin, related_name="userFollowing", on_delete = models.CASCADE)
+    topic = models.ForeignKey(Topic, related_name="topicFollowed", on_delete = models.CASCADE)
 
 
 
@@ -68,26 +69,35 @@ class Post(models.Model):
     visibility = models.CharField(max_length=36)
     anonymous = models.BooleanField()
     view_count = models.IntegerField()
-    topicID = models.ForeignKey(Topic, on_delete = models.CASCADE)
-    userID =  models.ForeignKey(UserLogin, on_delete = models.CASCADE)
-    parentID = models.ForeignKey('self',on_delete = models.CASCADE)
+    create_time = models.DateTimeField(auto_now_add=True)
+    topic = models.ForeignKey(Topic, on_delete = models.CASCADE)
+    user =  models.ForeignKey(UserLogin, on_delete = models.CASCADE)
+    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
     is_story = models.BooleanField()
-
-    def __str__(self):
-        return f"{self.id}: {self.username}"
-    class Meta:  #abstract class refer: https://docs.djangoproject.com/en/4.0/topics/db/models/#abstract-base-classes
-        abstract = True
 
 
 
 # #child of the topic class 
-class Story(Post):
+class Story(models.Model):
+    id = models.OneToOneField(
+        Post,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name='story_id'
+    )
+    title = models.CharField(max_length=100, default = 'no title')
     content = models.CharField(max_length=1000)
     def __str__(self):
         return f"{self.id}: {self.content}"
 
 # #child of the topic class 
-class Feed(Post):
+class Feed(models.Model):
+    id = models.OneToOneField(
+        Post,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name='feed_id'
+    )
     content = models.CharField(max_length=200)
     emoji = models.IntegerField()
     def __str__(self):
@@ -95,24 +105,24 @@ class Feed(Post):
 
 
 #comments for the feeds class 
-class Comments(models.Model):
+class Comment(models.Model):
     content = models.CharField(max_length=300)
     create_time =models.DateTimeField(auto_now_add=True)
     emoji = models.IntegerField()
-    userID = models.ForeignKey(UserLogin, on_delete=models.CASCADE)
-    feedID = models.ForeignKey(Feed, on_delete=models.CASCADE)
-    parentID = models.ForeignKey('self',on_delete=models.CASCADE)
+    user = models.ForeignKey(UserLogin, on_delete=models.CASCADE)
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
 
     def __str__(self):
         return f"{self.id}: {self.content}"
 
 
 class TopicRanking(models.Model):
-    userID = models.ForeignKey(UserLogin, on_delete=models.CASCADE, related_name='topicCreator')
+    user = models.ForeignKey(UserLogin, on_delete=models.CASCADE, related_name='topicCreator')
     create_time = models.DateTimeField(auto_now_add=True)
     topicName= models.CharField(max_length=45)
     topicAbstract = models.CharField(max_length=255)
-    moderatorID = models.ForeignKey(UserLogin,on_delete=models.CASCADE,related_name='topicModerator')
+    moderator = models.ForeignKey(UserLogin,on_delete=models.CASCADE,related_name='topicModerator')
     votes = models.IntegerField()
 
     class Meta:
@@ -125,9 +135,9 @@ class Question(models.Model):
     questionContent =  models.CharField(max_length= 255)
 
 class userResponse(models.Model):
-    questionID = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     create_time = models.DateTimeField(auto_now_add=True)
-    userID= models.ForeignKey(UserLogin, on_delete=models.CASCADE)
+    user= models.ForeignKey(UserLogin, on_delete=models.CASCADE)
     content = models.CharField(max_length=255)
     
     def __str__(self):
