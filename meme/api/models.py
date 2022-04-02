@@ -3,7 +3,7 @@ from django.db import models
 
 #on_delete: https://stackoverflow.com/questions/38388423/what-does-on-delete-do-on-django-models
 #meta: https://docs.djangoproject.com/en/4.0/ref/models/options/
-#blank vs null: https://stackoverflow.com/questions/8609192/what-is-the-difference-between-null-true-and-blank-true-in-django
+#blank and null: https://stackoverflow.com/questions/8609192/what-is-the-difference-between-null-true-and-blank-true-in-django
 
 # Create your models here.
 class UserLogin(models.Model):
@@ -18,6 +18,12 @@ class UserLogin(models.Model):
 
 #
 class UserInfo(models.Model):
+    id = models.OneToOneField(
+        UserLogin,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name='UserInfo_id'
+    )
     email = models.CharField(max_length=255)
     gender = models.CharField(max_length=15)
     bio = models.CharField(max_length=100)

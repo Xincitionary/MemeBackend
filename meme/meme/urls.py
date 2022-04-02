@@ -20,8 +20,12 @@ from api import views
 
 router = routers.DefaultRouter()
 
-router.register(r'userLogins', views.UserLoginViewSet)
+router.register(r'userLogin', views.UserLoginViewSet)
+router.register(r'userInfo', views.UserInfoViewSet)
 router.register(r'Topics', views.TopicViewSet)
+router.register(r'Posts', views.PostViewSet)
+router.register(r'PostListByTopic', views.PostListByTopic, basename = 'PostListByTopic')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -44,3 +44,7 @@ VALUES (NULL, 'invisible', 0,2,CURRENT_TIMESTAMP, 1,1,NULL,1);
 
 INSERT INTO  api_post(id, visibility, anonymous, view_count,create_time, topic_id,user_id,parent_id,is_story)
 VALUES (NULL, 'visible', 1,3,CURRENT_TIMESTAMP, 1,1,NULL,1);
+
+
+
+-- p1 = Post(visibility = 'visible', anonymous =1, view_count = 2,create_time = datetime.now(), topic_id = 1, user_id = 1,parent_id = None, is_story = 1)

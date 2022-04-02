@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import permissions
-from .models import UserLogin, Topic
+from .models import *
 from .serializers import *
 
 # Create your views here.
@@ -27,21 +27,58 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 
 
-# class StoryViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Topic.objects.all()
-#     serializer_class = StorySerializer
-#     permission_classes = [permissions.IsAuthenticated]
+class UserInfoViewSet(viewsets.ModelViewSet):
+    queryset = UserInfo.objects.all()
+    serializer_class = UserInfoSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-# class FeedViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Topic.objects.all()
-#     serializer_class = FeedSerializer
-#     permission_classes = [permissions.IsAuthenticated]
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+
+
+class StoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Topic.objects.all()
+    serializer_class = StorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+
+class PostListByTopic(viewsets.ModelViewSet):
+
+    serializer_class = PostSerializer
+
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Post.objects.all()
+        creator = self.request.query_params.get('userID')
+        if creator is not None:
+            queryset = queryset.filter(user = creator)
+        return queryset
+
+
+class FeedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Topic.objects.all()
+    serializer_class = FeedSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 
