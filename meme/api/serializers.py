@@ -19,14 +19,7 @@ class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Topic
-        fields = ['id', 'creator','num_followers','num_feeds','num_stories','trending', 'abstract', 'topicName']
-
-class PostSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Post
-        fields = ['id', 'visibility','anonymous','view_count','create_time','is_story','parent_id','topic_id','user_id']
-
-
+        fields = ['id', 'creator','num_followers','num_feeds','num_stories','trending', 'abstract', 'topicName', 'create_time','last_updated']
 
 class StorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -38,3 +31,9 @@ class FeedSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Feed
         fields = ['id','emoji','content']
+
+    
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id','create_time','content','emoji','parent_id','user_id','feed_id']

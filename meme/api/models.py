@@ -1,5 +1,6 @@
 from unittest.mock import DEFAULT
 from django.db import models
+# from datetime import datetime
 
 #on_delete: https://stackoverflow.com/questions/38388423/what-does-on-delete-do-on-django-models
 #meta: https://docs.djangoproject.com/en/4.0/ref/models/options/
@@ -47,7 +48,9 @@ class UserFollowing(models.Model):
 
 class Topic(models.Model):
     #topic id
-    creator =models.ForeignKey(UserLogin, on_delete=models.CASCADE)
+    creator =models.ForeignKey(UserLogin,null =True, on_delete=models.SET_NULL)
+    create_time = models.DateTimeField(auto_now_add=True)
+    last_updated =  models.DateTimeField(auto_now=True)
     num_followers = models.IntegerField()
     num_feeds = models.IntegerField()
     num_stories = models.IntegerField()
@@ -78,34 +81,29 @@ class Post(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     topic = models.ForeignKey(Topic, on_delete = models.CASCADE)
     user =  models.ForeignKey(UserLogin, on_delete = models.CASCADE)
-    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
-    is_story = models.BooleanField()
 
+
+    class Meta:
+        abstract = True
 
 
 # #child of the topic class 
-class Story(models.Model):
-    id = models.OneToOneField(
-        Post,
-        on_delete=models.CASCADE,
-        primary_key=True,
-        related_name='story_id'
-    )
-    title = models.CharField(max_length=100, default = 'no title')
+class Story(Post):
+
+    title = models.CharField(max_length=100)
     content = models.CharField(max_length=1000)
+    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
     def __str__(self):
         return f"{self.id}: {self.content}"
 
 # #child of the topic class 
-class Feed(models.Model):
-    id = models.OneToOneField(
-        Post,
-        on_delete=models.CASCADE,
-        primary_key=True,
-        related_name='feed_id'
-    )
+class Feed(Post):
+
     content = models.CharField(max_length=200)
     emoji = models.IntegerField()
+    parentFeed = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
+    parentStory = models.ForeignKey(Story,null = True,blank=True, on_delete = models.SET_NULL)
+    parentIsStory = models.BooleanField
     def __str__(self):
         return f"{self.id}: {self.content}"
 
@@ -122,7 +120,7 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.id}: {self.content}"
 
-
+#Topics that are yet to added.
 class TopicRanking(models.Model):
     user = models.ForeignKey(UserLogin, on_delete=models.CASCADE, related_name='topicCreator')
     create_time = models.DateTimeField(auto_now_add=True)

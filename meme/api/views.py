@@ -34,15 +34,6 @@ class UserInfoViewSet(viewsets.ModelViewSet):
 
 
 
-class PostViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
 
 
 class StoryViewSet(viewsets.ModelViewSet):
@@ -55,21 +46,38 @@ class StoryViewSet(viewsets.ModelViewSet):
 
 
 
-class PostListByTopic(viewsets.ModelViewSet):
+# class PostListByTopic(viewsets.ModelViewSet):
 
-    serializer_class = PostSerializer
+#     serializer_class = PostSerializer
 
 
-    def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
-        queryset = Post.objects.all()
-        creator = self.request.query_params.get('userID')
-        if creator is not None:
-            queryset = queryset.filter(user = creator)
-        return queryset
+#     def get_queryset(self):
+#         """
+#         Optionally restricts the returned purchases to a given user,
+#         by filtering against a `username` query parameter in the URL.
+#         """
+#         queryset = Post.objects.all()
+#         topicID = self.request.query_params.get('topicID')
+#         if topicID is not None:
+#             queryset = queryset.filter(topic = topicID)
+#         return queryset
+
+
+# class PostListByUser(viewsets.ModelViewSet):
+
+#     serializer_class = PostSerializer
+
+
+#     def get_queryset(self):
+#         """
+#         Optionally restricts the returned purchases to a given user,
+#         by filtering against a `username` query parameter in the URL.
+#         """
+#         queryset = Post.objects.all()
+#         creator = self.request.query_params.get('userID')
+#         if creator is not None:
+#             queryset = queryset.filter(user = creator)
+#         return queryset
 
 
 class FeedViewSet(viewsets.ModelViewSet):
@@ -82,10 +90,22 @@ class FeedViewSet(viewsets.ModelViewSet):
 
 
 
-# class CommentViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Topic.objects.all()
-#     serializer_class = CommentSerializer
-#     permission_classes = [permissions.IsAuthenticated]
+class CommentViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+

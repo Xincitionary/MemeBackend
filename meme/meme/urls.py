@@ -23,8 +23,9 @@ router = routers.DefaultRouter()
 router.register(r'userLogin', views.UserLoginViewSet)
 router.register(r'userInfo', views.UserInfoViewSet)
 router.register(r'Topics', views.TopicViewSet)
-router.register(r'Posts', views.PostViewSet)
-router.register(r'PostListByTopic', views.PostListByTopic, basename = 'PostListByTopic')
+router.register(r'Comments', views.CommentViewSet)
+# router.register(r'PostListByTopic', views.PostListByTopic, basename = 'PostListByTopic')
+# router.register(r'PostListByUser', views.PostListByUser, basename = 'PostListByUser')
 
 
 urlpatterns = [
