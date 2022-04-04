@@ -6,6 +6,7 @@ USE `memedb` ;
 -- create schema if not exists memedb;
 
 -- ALTER TABLE api_topic AUTO_INCREMENT=1;
+
 -- DELETE FROM TABLE WHERE xxx;
 
 -- Create userlogins 
@@ -43,4 +44,33 @@ INSERT INTO  api_story(id, visibility, anonymous, view_count,create_time, title,
 VALUES (NULL, 'visible', 1,1,CURRENT_TIMESTAMP, 'story1', 'some content', NULL,3,1);
 
 
--- p1 = Post(visibility = 'visible', anonymous =1, view_count = 2,create_time = datetime.now(), topic_id = 1, user_id = 1,parent_id = None, is_story = 1)
+
+-- create feeds
+INSERT INTO  api_feed(id, visibility, anonymous, view_count,create_time, content,emoji, parentFeed_id,parentStory_id, topic_id,user_id)
+VALUES (NULL, 'visible', 1,1,CURRENT_TIMESTAMP,  'some content',1,NULL, NULL,3,1);
+
+-- create comments 
+INSERT INTO  api_comment(id, content, create_time, emoji, feed_id,parent_id, user_id)
+VALUES (NULL, 'comment content', CURRENT_TIMESTAMP, 2,1, NULL, 1);
+
+-- create topicranking 
+INSERT INTO  api_topicranking(id, create_time, topicName, topicAbstract,votes,moderator_id,user_id)
+VALUES (NULL,  CURRENT_TIMESTAMP, 'topicRank3','abstract', 1,1,1 );
+
+----------------------------- SQL SCRIPTS  -----------------------------
+
+
+-- FILTER BASED ON topic, 
+
+
+SELECT content, id, user_id, create_time, title
+   From api_story
+WHERE user_id = 2
+UNION
+SELECT content, id,user_id, create_time, NULL as title
+   From api_feed
+WHERE user_id = 2
+order by create_time desc
+
+
+

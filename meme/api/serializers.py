@@ -24,16 +24,25 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 class StorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Story
-        fields = ['id','title','content']
+        fields = ['id','title','content','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id']
 
     
 class FeedSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Feed
-        fields = ['id','emoji','content']
+        fields =['id','emoji','content','visibility','anonymous','view_count','create_time','parentFeed_id','parentStory_id','topic_id','user_id']
 
     
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Comment
         fields = ['id','create_time','content','emoji','parent_id','user_id','feed_id']
+
+
+class TopicRankingSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = TopicRanking
+        fields =['id','create_time','topicName','topicAbstract','votes','moderator_id','user_id']
+
+        
+# class FilteredSerializer(serializers.Serializer):

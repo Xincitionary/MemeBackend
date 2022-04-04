@@ -46,38 +46,38 @@ class StoryViewSet(viewsets.ModelViewSet):
 
 
 
-# class PostListByTopic(viewsets.ModelViewSet):
+class StoryListByTopic(viewsets.ModelViewSet):
 
-#     serializer_class = PostSerializer
-
-
-#     def get_queryset(self):
-#         """
-#         Optionally restricts the returned purchases to a given user,
-#         by filtering against a `username` query parameter in the URL.
-#         """
-#         queryset = Post.objects.all()
-#         topicID = self.request.query_params.get('topicID')
-#         if topicID is not None:
-#             queryset = queryset.filter(topic = topicID)
-#         return queryset
+    serializer_class = StorySerializer
 
 
-# class PostListByUser(viewsets.ModelViewSet):
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Story.objects.all()
+        topicID = self.request.query_params.get('topicID')
+        if topicID is not None:
+            queryset = queryset.filter(topic = topicID)
+        return queryset
 
-#     serializer_class = PostSerializer
+
+class FeedListByTopic(viewsets.ModelViewSet):
+
+    serializer_class = FeedSerializer
 
 
-#     def get_queryset(self):
-#         """
-#         Optionally restricts the returned purchases to a given user,
-#         by filtering against a `username` query parameter in the URL.
-#         """
-#         queryset = Post.objects.all()
-#         creator = self.request.query_params.get('userID')
-#         if creator is not None:
-#             queryset = queryset.filter(user = creator)
-#         return queryset
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Feed.objects.all()
+        topicID = self.request.query_params.get('topicID')
+        if topicID is not None:
+            queryset = queryset.filter(topic = topicID)
+        return queryset
 
 
 class FeedViewSet(viewsets.ModelViewSet):
@@ -108,4 +108,42 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+        
+class TopicRankingViewSet(viewsets.ModelViewSet):
+
+    serializer_class = TopicRankingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    topN = 4
+
+    def get_queryset(self):
+        queryset = TopicRanking.objects.all()[:self.topN]
+        return queryset
+
+
+#By default in the frontend, everything should be included. 
+class FilteredPostList(viewsets.ModelViewSet):
+
+    serializer_class= StorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    # Need to define a serializer class 
+    def get_queryset(self):
+        queryset_Feed = Feed.objects.all()
+        queryset_Story = Feed.objects.all()
+        include_shared = self.request.query_params.get('include_shared')  
+        # include_comment = self.request.query_params.get('include_comment')  
+        include_anonymous = self.request.query_params.get('include_shared')  
+        start_time = self.request.query_params.get('start_time')
+        finish_time = self.request.query_params.get('finish_time')
+
+        if not (include_shared):  #if we don't include shared post. 
+            queryset_Feed.filter(parentFeed = None)
+            queryset_Story.filter(parent = None)
+        if not (include_anonymous):
+            queryset_Feed.filter(anonymous = 0)
+            queryset_Story.filter(anonymous = 0)
+        queryset_Feed.filter(create_time__gte= start_time, create_time__lte=finish_time)
+        queryset_Story.filter(create_time__gte= start_time, create_time__lte=finish_time)
+        return queryset_Story
 

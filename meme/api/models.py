@@ -130,7 +130,7 @@ class TopicRanking(models.Model):
     votes = models.IntegerField()
 
     class Meta:
-        ordering = ['votes']
+        ordering = ['-votes']
 
     def __str__(self):
         return f"{self.id}: {self.topicName}"
