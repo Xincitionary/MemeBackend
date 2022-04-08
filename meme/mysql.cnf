@@ -1,8 +1,0 @@
-[client]
-database = 'memedb'
-user = 'admin'
-password = 'citang2022'
-host:'memedb.cfjhvj4yy4z8.us-east-1.rds.amazonaws.com'
-port:3306
-sql_mode: 'traditional'
-default-character-set = utf8
