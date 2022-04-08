@@ -9,3 +9,5 @@ pip install -r requirements.txt
 #runserver
 cd meme
 python3 manage.py runserver
+
+Note: ask Eric to get sql credential 
