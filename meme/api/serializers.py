@@ -5,7 +5,7 @@ from rest_framework import serializers
 class UserLoginSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserLogin
-        fields = ['id','username','password','create_time']
+        fields = ['id','username','password','last_login','date_joined','email']
 
 
 
@@ -45,4 +45,7 @@ class TopicRankingSerializer(serializers.HyperlinkedModelSerializer):
         fields =['id','create_time','topicName','topicAbstract','votes','moderator_id','user_id']
 
         
-# class FilteredSerializer(serializers.Serializer):
+class FilteredSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    topic = serializers.IntegerField(read_only=True)
+    # create_time = serializers.DateTimeField()

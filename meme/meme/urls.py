@@ -24,10 +24,11 @@ router.register(r'userLogin', views.UserLoginViewSet)
 router.register(r'userInfo', views.UserInfoViewSet)
 router.register(r'Topics', views.TopicViewSet)
 router.register(r'Comments', views.CommentViewSet)
-router.register(r'PostListByTopic', views.StoryListByTopic, basename = 'StoryListByTopic')
-router.register(r'PostListByUser', views.FeedListByTopic, basename = 'FeedListByUser')
-router.register(r'topicRanking',views.TopicRankingViewSet,basename = 'topicRankingList' )
-router.register(r'filteredPostList', views.FilteredPostList, basename = 'filteredPostList')
+router.register(r'StoryListByTopic', views.StoryListByTopic, basename = 'StoryListByTopic')
+router.register(r'FeedListByTopic', views.FeedListByTopic, basename = 'FeedListByTopic')
+router.register(r'topicRanking',views.TopicRankingViewSet,basename = 'topicRanking' )
+router.register(r'filteredPostList', views.FilteredPostListViewSet, basename = 'filteredPostList')
+
 
 
 
@@ -39,5 +40,6 @@ urlpatterns = [
 ] + router.urls
 
 
-
-
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]

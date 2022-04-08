@@ -1,5 +1,8 @@
 from unittest.mock import DEFAULT
 from django.db import models
+from django.contrib.auth.models import AbstractUser #,PermissionMixin
+
+from django.conf import settings
 # from datetime import datetime
 
 #on_delete: https://stackoverflow.com/questions/38388423/what-does-on-delete-do-on-django-models
@@ -7,10 +10,8 @@ from django.db import models
 #blank and null: https://stackoverflow.com/questions/8609192/what-is-the-difference-between-null-true-and-blank-true-in-django
 
 # Create your models here.
-class UserLogin(models.Model):
-    username = models.CharField(max_length=36)
-    password = models.CharField(max_length=36)
-    create_time = models.DateTimeField(auto_now_add=True)
+class UserLogin(AbstractUser):
+    pass
 
     def __str__(self):
         return f"{self.id}: {self.username}"
@@ -20,15 +21,14 @@ class UserLogin(models.Model):
 #
 class UserInfo(models.Model):
     id = models.OneToOneField(
-        UserLogin,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         primary_key=True,
         related_name='UserInfo_id'
     )
-    email = models.CharField(max_length=255)
     gender = models.CharField(max_length=15)
     bio = models.CharField(max_length=100)
-    user = models.ForeignKey(UserLogin, on_delete = models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     school = models.CharField(max_length=45)
     degree = models.CharField(max_length=45)
     num_following = models.IntegerField()
@@ -42,13 +42,13 @@ class UserInfo(models.Model):
         return f"{self.id}: {self.bio}"
 
 class UserFollowing(models.Model):
-    user = models.ForeignKey(UserLogin, related_name="following", on_delete=models.CASCADE)
-    following = models.ForeignKey(UserLogin, related_name="followers", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="following", on_delete=models.CASCADE)
+    following = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="followers", on_delete=models.CASCADE)
 
 
 class Topic(models.Model):
     #topic id
-    creator =models.ForeignKey(UserLogin,null =True, on_delete=models.SET_NULL)
+    creator =models.ForeignKey(settings.AUTH_USER_MODEL,null =True, on_delete=models.SET_NULL)
     create_time = models.DateTimeField(auto_now_add=True)
     last_updated =  models.DateTimeField(auto_now=True)
     num_followers = models.IntegerField()
@@ -63,12 +63,12 @@ class Topic(models.Model):
         return ret
 
 class TopicModerator(models.Model):
-    user = models.ForeignKey(UserLogin, related_name="moderator", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="moderator", on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, related_name="topicModerated", on_delete = models.CASCADE)
 
 
 class FollowTopic(models.Model):
-    user = models.ForeignKey(UserLogin, related_name="userFollowing", on_delete = models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="userFollowing", on_delete = models.CASCADE)
     topic = models.ForeignKey(Topic, related_name="topicFollowed", on_delete = models.CASCADE)
 
 
@@ -80,7 +80,7 @@ class Post(models.Model):
     view_count = models.IntegerField()
     create_time = models.DateTimeField(auto_now_add=True)
     topic = models.ForeignKey(Topic, on_delete = models.CASCADE)
-    user =  models.ForeignKey(UserLogin, on_delete = models.CASCADE)
+    user =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
 
 
     class Meta:
@@ -113,7 +113,7 @@ class Comment(models.Model):
     content = models.CharField(max_length=300)
     create_time =models.DateTimeField(auto_now_add=True)
     emoji = models.IntegerField()
-    user = models.ForeignKey(UserLogin, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
 
@@ -122,11 +122,11 @@ class Comment(models.Model):
 
 #Topics that are yet to added.
 class TopicRanking(models.Model):
-    user = models.ForeignKey(UserLogin, on_delete=models.CASCADE, related_name='topicCreator')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='topicCreator')
     create_time = models.DateTimeField(auto_now_add=True)
     topicName= models.CharField(max_length=45)
     topicAbstract = models.CharField(max_length=255)
-    moderator = models.ForeignKey(UserLogin,on_delete=models.CASCADE,related_name='topicModerator')
+    moderator = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='topicModerator')
     votes = models.IntegerField()
 
     class Meta:
@@ -141,7 +141,7 @@ class Question(models.Model):
 class userResponse(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     create_time = models.DateTimeField(auto_now_add=True)
-    user= models.ForeignKey(UserLogin, on_delete=models.CASCADE)
+    user= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.CharField(max_length=255)
     
     def __str__(self):

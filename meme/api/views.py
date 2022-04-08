@@ -122,28 +122,31 @@ class TopicRankingViewSet(viewsets.ModelViewSet):
 
 
 #By default in the frontend, everything should be included. 
-class FilteredPostList(viewsets.ModelViewSet):
+#REQUIRE WORK 
+class FilteredPostListViewSet(viewsets.ModelViewSet):
 
-    serializer_class= StorySerializer
+    serializer_class= FilteredSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     # Need to define a serializer class 
     def get_queryset(self):
-        queryset_Feed = Feed.objects.all()
-        queryset_Story = Feed.objects.all()
-        include_shared = self.request.query_params.get('include_shared')  
-        # include_comment = self.request.query_params.get('include_comment')  
-        include_anonymous = self.request.query_params.get('include_shared')  
-        start_time = self.request.query_params.get('start_time')
-        finish_time = self.request.query_params.get('finish_time')
+        queryset_Feed = Feed.objects.all().values_list('id','topic')
+        queryset_Story = Story.objects.all().values_list('id','topic')
+        queryset= queryset_Feed.union(queryset_Story)
+    #     queryset = queryset_Feed.union(queryset_Story)
+    #     include_shared = self.request.query_params.get('include_shared')  
+    #     # include_comment = self.request.query_params.get('include_comment')  
+    #     include_anonymous = self.request.query_params.get('include_shared')  
+    #     start_time = self.request.query_params.get('start_time')
+    #     finish_time = self.request.query_params.get('finish_time')
 
-        if not (include_shared):  #if we don't include shared post. 
-            queryset_Feed.filter(parentFeed = None)
-            queryset_Story.filter(parent = None)
-        if not (include_anonymous):
-            queryset_Feed.filter(anonymous = 0)
-            queryset_Story.filter(anonymous = 0)
-        queryset_Feed.filter(create_time__gte= start_time, create_time__lte=finish_time)
-        queryset_Story.filter(create_time__gte= start_time, create_time__lte=finish_time)
-        return queryset_Story
-
+    #     if not (include_shared):  #if we don't include shared post. 
+    #         queryset_Feed.filter(parentFeed = None)
+    #         queryset_Story.filter(parent = None)
+    #     if not (include_anonymous):
+    #         queryset_Feed.filter(anonymous = 0)
+    #         queryset_Story.filter(anonymous = 0)
+    #     queryset_Feed.filter(create_time__gte= start_time, create_time__lte=finish_time)
+    #     queryset_Story.filter(create_time__gte= start_time, create_time__lte=finish_time)
+    #     return queryset_Story
+        return queryset
