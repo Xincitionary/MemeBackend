@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./Pages/HomePage";
-import About from "./Pages/About";
-import Profile from "./Pages/Profile";
-import ErrorPage from "./Pages/ErrorPage";
+import Home from "./pages/HomePage";
+import About from "./pages/About";
+import Profile from "./pages/Profile";
+import ErrorPage from "./pages/ErrorPage";
 
 //Original App.js page with routers implemented
 //nav content exist for all pages
