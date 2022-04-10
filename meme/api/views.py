@@ -14,7 +14,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
         # Add custom claims
         token['username'] = user.username
         return token
@@ -175,3 +174,10 @@ class FilteredPostListViewSet(viewsets.ModelViewSet):
     #     queryset_Story.filter(create_time__gte= start_time, create_time__lte=finish_time)
     #     return queryset_Story
         return queryset
+
+
+# @api_view(['GET'])
+# def getInfo(request):
+#     queryset = UserLogin.objects.all()
+#     serializer_class = UserLoginSerializer
+#     permission_classes = [permissions.IsAuthenticated]
