@@ -5,8 +5,8 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import PrivateRoute from "./utils/PrivateRoute";
-import Profile from "./pages/Profile";
 import Header from "./components/Header";
+import NavbarComp from "./components/NavbarComp";
 
 //nav content exist for all pages
 function App() {
@@ -14,12 +14,6 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
-          {/* <nav>
-            <Link to="/">Home</Link>
-            <Link to="/login">Login</Link>
-          </nav> */}
-          <Header />
-
           <Routes>
             <Route exact path="/" element={<PrivateRoute />}>
               <Route exact path="/" element={<HomePage />} />

@@ -24,7 +24,7 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 class StorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Story
-        fields = ['id','title','content','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id']
+        fields = ['id','title','content','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id','num_comments']
 
     
 class FeedSerializer(serializers.HyperlinkedModelSerializer):

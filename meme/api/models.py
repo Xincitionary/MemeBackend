@@ -84,13 +84,14 @@ class Post(models.Model):
 
 
     class Meta:
+        ordering = ['-create_time']
         abstract = True
 
 
 # #child of the topic class 
 class Story(Post):
-
     title = models.CharField(max_length=100)
+    num_comments = models.IntegerField(default=0)
     content = models.CharField(max_length=1000)
     parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
     def __str__(self):
@@ -100,10 +101,13 @@ class Story(Post):
 class Feed(Post):
 
     content = models.CharField(max_length=200)
+    num_comments = models.IntegerField(default=0)
     emoji = models.IntegerField()
     parentFeed = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
     parentStory = models.ForeignKey(Story,null = True,blank=True, on_delete = models.SET_NULL)
     parentIsStory = models.BooleanField
+
+
     def __str__(self):
         return f"{self.id}: {self.content}"
 

@@ -64,7 +64,7 @@ class StoryViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Topic.objects.all()
+    queryset = Story.objects.all()
     serializer_class = StorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -108,7 +108,7 @@ class FeedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Topic.objects.all()
+    queryset = Feed.objects.all()
     serializer_class = FeedSerializer
     permission_classes = [permissions.IsAuthenticated]
 

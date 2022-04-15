@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     });
     let data = await response.json();
     //we want to set it in our state (and local storage) to be used for private routes later
-    if (response.status == 200) {
+    if (response.status === 200) {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authtokens", JSON.stringify(data));
