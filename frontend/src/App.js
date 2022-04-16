@@ -5,8 +5,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import PrivateRoute from "./utils/PrivateRoute";
-import Header from "./components/Header";
-import NavbarComp from "./components/NavbarComp";
+import Header from "./components/Header/Header";
 
 //nav content exist for all pages
 function App() {

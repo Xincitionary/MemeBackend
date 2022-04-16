@@ -1,0 +1,14 @@
+#recent-feeds {
+  width: 35rem;
+  max-width: 90%;
+  margin: 3rem auto;
+}
+
+.header {
+  font-family: Source Han Sans CN;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0.3em;
+  text-align: left;
+}

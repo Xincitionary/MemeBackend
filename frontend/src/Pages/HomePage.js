@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Feedlist from "../components/Feed/Feedlist/Feedlist";
+import "./pageCss/HomePage.css";
 
 const HomePage = () => {
   let [userInfo, setUserInfo] = useState([]);
@@ -9,7 +11,7 @@ const HomePage = () => {
   let { user, authTokens, logoutUser } = useContext(AuthContext);
 
   useEffect(() => {
-    getUserInfo();
+    // getUserInfo();
     getRecentFeeds();
   }, []);
 
@@ -50,14 +52,6 @@ const HomePage = () => {
     }
   };
 
-  <div>
-    <Link to="/">Profile</Link>
-    <span> | </span>
-    {user ? <a onClick={logoutUser}>Logout</a> : <Link to="/login">Login</Link>}
-
-    {user && <p>Hello {user.username}</p>}
-  </div>;
-
   return (
     <div>
       <Navbar expand="lg" bg="none" variant="light">
@@ -73,19 +67,12 @@ const HomePage = () => {
           </Nav>
         </Container>
       </Navbar>
-      <p>Hi {user.username}!, 今天你能来真好！今天发生了什么吗？</p>
 
-      <h3>动态</h3>
-
-      <ul>
-        {recentFeeds.map((feed) => (
-          <li key={feed.id}>
-            Create_time: {feed.create_time}
-            <div></div>
-            Content: {feed.content}
-          </li>
-        ))}
-      </ul>
+      <section id="recent-feeds">
+        <p>Hi {user.username}!, 今天你能来真好！今天发生了什么吗？</p>
+        <h3 className="header">最新动态</h3>
+        <Feedlist items={recentFeeds} />
+      </section>
     </div>
   );
 };
