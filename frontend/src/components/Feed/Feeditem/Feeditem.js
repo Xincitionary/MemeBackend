@@ -7,7 +7,7 @@ import anymHead from "./../../../images/anymHead.png";
 
 const Feeditem = (props) => {
   return (
-    <li>
+    <li className="list">
       <div className="row">
         <div>
           <img src={anymHead} className="profile-pic"></img>

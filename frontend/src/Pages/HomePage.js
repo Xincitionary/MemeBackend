@@ -68,10 +68,17 @@ const HomePage = () => {
         </Container>
       </Navbar>
 
-      <section id="recent-feeds">
-        <p>Hi {user.username}!, 今天你能来真好！今天发生了什么吗？</p>
-        <h3 className="header">最新动态</h3>
-        <Feedlist items={recentFeeds} />
+      <section className="main-page">
+        <div className="left">
+          <div className="logo"> MĒMĒ</div>
+        </div>
+        <div className="right">
+          <section id="recent-feeds">
+            <p>Hi {user.username}!, 今天你能来真好！今天发生了什么吗？</p>
+            <h3 className="header">最新动态</h3>
+            <Feedlist items={recentFeeds} />
+          </section>
+        </div>
       </section>
     </div>
   );
