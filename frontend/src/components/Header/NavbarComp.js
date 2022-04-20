@@ -13,17 +13,22 @@ const NavbarComp = () => {
       sticky="top"
       className="border"
     >
-      <Navbar.Brand className="navLogo">MĒMĒ</Navbar.Brand>
       <Container>
-        <Nav className="ms-auto">
-          <Nav.Link href="#">Home</Nav.Link>
-          <Nav.Link href="topic">Topic</Nav.Link>
-          {user ? (
-            <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
-          ) : (
-            <Nav.Link href="#login">Logout</Nav.Link>
-          )}
-        </Nav>
+        <Navbar.Brand className="navLogo" href="#">
+          MĒMĒ
+        </Navbar.Brand>
+
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link href="#">Home</Nav.Link>
+            {user ? (
+              <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
+            ) : (
+              <Nav.Link href="#login">Logout</Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

@@ -2,15 +2,19 @@ import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import Feedlist from "../../components/Feed/Feedlist/Feedlist";
 import NavbarComp from "../../components/Header/NavbarComp";
+import PopupPost from "../../components/Popup/PopupPost";
+import Modal from "react-modal";
 import "./TopicPage.css";
 
 const TopicPage = () => {
   //   let [userInfo, setUserInfo] = useState([]);
   let [topicFeeds, setTopicFeeds] = useState([]);
   let [topicInfo, setTopicInfo] = useState([]);
-  let { user, authTokens, logoutUser } = useContext(AuthContext);
+  let { authTokens } = useContext(AuthContext);
+  const [postModalOpen, setPostModalOpen] = useState(false);
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     getTopicFeeds();
     getTopicInfo();
   }, []);
@@ -53,18 +57,19 @@ const TopicPage = () => {
 
   return (
     <div>
+      {postModalOpen && <PopupPost setOpenModal={setPostModalOpen} />}
       <NavbarComp />
       <section className="main-page">
         <div className="left">
           <div className="topicContainer">
             <div className="topicName">{topicInfo.topicName}</div>
 
-            <div className="topicDescription">{topicInfo.abstract}</div>
-            <div className="topicDescription">By：词堂爸爸</div>
-            <span className="topicDescription">
+            <div className="topicAbstract">{topicInfo.abstract}</div>
+            <div className="topicOther">By：词堂爸爸</div>
+            <span className="topicOther">
               创建时间： {topicInfo.create_time}
             </span>
-            <div className="topicDescription">
+            <div className="topicOther">
               已有{topicInfo.num_feeds}条，{topicInfo.num_followers}
               个成员在纽约的地铁上
             </div>
@@ -76,12 +81,20 @@ const TopicPage = () => {
               >
                 加入
               </button>
-              <button type="button" className="btn btn-dark buttonWidth">
+
+              <button
+                type="button"
+                className="btn btn-dark buttonWidth"
+                onClick={() => {
+                  setPostModalOpen(true);
+                }}
+              >
                 发布
               </button>
             </div>
           </div>
         </div>
+
         <div className="right">
           <section id="topic-feeds">
             <Feedlist items={topicFeeds} />
