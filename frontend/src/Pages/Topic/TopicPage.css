@@ -1,0 +1,111 @@
+#topic-feeds {
+  width: 35rem;
+  max-width: 90%;
+  margin: 2rem auto;
+}
+
+.header {
+  font-family: Source Han Sans CN;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0.3em;
+  text-align: left;
+}
+
+.topicContainer {
+  margin: 1.5rem auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.topicName {
+  font-family: "Source Han Sans CN";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 52px;
+  text-align: justify;
+  letter-spacing: 0.3em;
+  margin-bottom: 10px;
+  color: #ffb469;
+}
+
+.topicDescription {
+  /* 主要内容 */
+
+  font-family: "Source Han Sans CN";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 10px;
+
+  letter-spacing: 0.025em;
+
+  /* 次级信息&元素 */
+  color: #666666;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.buttonWidth {
+  width: 40%;
+}
+
+/* main page */
+.main-page {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr min-content;
+}
+
+/* left */
+.left {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* right */
+.right {
+  grid-column: 2 / -1;
+  grid-row: 1 / 2;
+  position: relative;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+@media only screen and (max-width: 680px) {
+  /* main page */
+  .main-page {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: left;
+  }
+
+  /* left */
+  .left {
+    margin-left: 50px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* right */
+  .right {
+    margin-left: 50px;
+    margin-right: 50px;
+    position: relative;
+    overflow-y: scroll;
+  }
+}

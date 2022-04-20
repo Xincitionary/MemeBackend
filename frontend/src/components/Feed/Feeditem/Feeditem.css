@@ -19,7 +19,7 @@
   border-color: black;
   border-width: 3px;
   cursor: pointer;
-  width: 100%;
+  width: 80%;
 }
 
 .username {
@@ -62,6 +62,7 @@
 .profile-pic {
   height: 40px;
   width: 40px;
+  margin-right: 5px;
 }
 
 .row {

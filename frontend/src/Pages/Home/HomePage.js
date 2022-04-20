@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Feedlist from "../components/Feed/Feedlist/Feedlist";
-import "./pageCss/HomePage.css";
+import Feedlist from "../../components/Feed/Feedlist/Feedlist";
+import NavbarComp from "../../components/Header/NavbarComp";
+import "./HomePage.css";
 
 const HomePage = () => {
   let [userInfo, setUserInfo] = useState([]);
@@ -54,19 +55,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <Navbar expand="lg" bg="none" variant="light">
-        <Container>
-          <Nav className="ms-auto">
-            <Nav.Link href="#">Home</Nav.Link>
-
-            {user ? (
-              <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
-            ) : (
-              <Nav.Link href="#login">Logout</Nav.Link>
-            )}
-          </Nav>
-        </Container>
-      </Navbar>
+      <NavbarComp />
 
       <section className="main-page">
         <div className="left">

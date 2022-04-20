@@ -1,7 +1,8 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Home/HomePage";
+import TopicPage from "./pages/Topic/TopicPage";
 import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -15,8 +16,9 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route exact path="/" element={<PrivateRoute />}>
-              <Route exact path="/" element={<HomePage />} />
+              <Route exact path="/" element={<TopicPage />} />
             </Route>
+
             <Route path="/login" element={<LoginPage />} />
             {/* <Route path="*" element={<ErrorPage />} /> */}
           </Routes>

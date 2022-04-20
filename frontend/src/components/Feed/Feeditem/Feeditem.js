@@ -9,12 +9,13 @@ const Feeditem = (props) => {
   return (
     <li className="list">
       <div className="row">
-        <div>
+        {/* <div>
           <img src={anymHead} className="profile-pic"></img>
-        </div>
+        </div> */}
 
         <div className="feed-item">
           <div>
+            <img src={anymHead} className="profile-pic"></img>
             <span className="username">@匿名</span>
             <span className="time">· 2分钟前</span>
           </div>

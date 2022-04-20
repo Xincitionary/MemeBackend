@@ -1,0 +1,15 @@
+.navLogo {
+  font-family: Roboto;
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 35px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-left: 100px;
+}
+
+.border {
+  border-bottom: 5px solid #000000;
+  padding: 0;
+  margin-bottom: 15px;
+}

@@ -73,7 +73,7 @@ class StoryViewSet(viewsets.ModelViewSet):
 class StoryListByTopic(viewsets.ModelViewSet):
 
     serializer_class = StorySerializer
-
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         """
@@ -90,6 +90,7 @@ class StoryListByTopic(viewsets.ModelViewSet):
 class FeedListByTopic(viewsets.ModelViewSet):
 
     serializer_class = FeedSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
     def get_queryset(self):
@@ -102,6 +103,7 @@ class FeedListByTopic(viewsets.ModelViewSet):
         if topicID is not None:
             queryset = queryset.filter(topic = topicID)
         return queryset
+
 
 
 class FeedViewSet(viewsets.ModelViewSet):
@@ -124,16 +126,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 
-class CommentViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-        
 class TopicRankingViewSet(viewsets.ModelViewSet):
 
     serializer_class = TopicRankingSerializer

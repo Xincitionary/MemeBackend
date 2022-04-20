@@ -1,36 +1,32 @@
 import React, { Component, useContext } from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
+import "./Navbar.css";
 
 const NavbarComp = () => {
   let { user, logoutUser } = useContext(AuthContext);
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar
+      expand="lg"
+      bg="none"
+      variant="light"
+      sticky="top"
+      className="border"
+    >
+      <Navbar.Brand className="navLogo">MĒMĒ</Navbar.Brand>
       <Container>
-        <Navbar.Brand href="#home">MeMe</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Login</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav className="ms-auto">
+          <Nav.Link href="#">Home</Nav.Link>
+          <Nav.Link href="topic">Topic</Nav.Link>
+          {user ? (
+            <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
+          ) : (
+            <Nav.Link href="#login">Logout</Nav.Link>
+          )}
+        </Nav>
       </Container>
     </Navbar>
   );
 };
 
 export default NavbarComp;
-
-// <div>
-//         <Link to="/">Profile</Link>
-//         <span> | </span>
-//         {user ? (
-//           <a onClick={logoutUser}>Logout</a>
-//         ) : (
-//           <Link to="/login">Login</Link>
-//         )}
-
-//         {user && <p>Hello {user.username}</p>}
-//       </div>
