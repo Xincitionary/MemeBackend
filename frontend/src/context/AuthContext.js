@@ -97,26 +97,27 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({
         id: null,
-        emoji: 0,
-        visibility: "visible",
-        topic_id: currentTopicId,
+        title: "321",
         content: e.target.feedContent.value,
-        visibility: 0,
+        visibility: "1",
         anonymous: e.target.anonymous.value,
-        parentFeed_id: null,
-        parentStory_id: null,
-        user_id: user.id,
+        view_count: 1,
+        create_time: null,
+        parent_id: 1,
+        topic_id: 1,
+        user_id: 3,
+        parentFeed_id: 1,
+        parentStory_id: 1,
         num_comments: 0,
         num_shares: 0,
         num_likes: 0,
-        view_count: 0,
       }),
     });
 
     let data = await response.json();
     console.log(data);
     //we want to set it in our state (and local storage) to be used for private routes later
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 202) {
       alert("post submitted successfully! ");
     } else {
       alert("something went wrong");
