@@ -53,11 +53,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
 }
 
 .modalContainer .footer button {
   width: 150px;
-
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;

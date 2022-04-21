@@ -69,8 +69,3 @@ class TopicRankingSerializer(serializers.HyperlinkedModelSerializer):
         model = TopicRanking
         fields =['id','create_time','topicName','topicAbstract','votes','moderator_id','user_id']
 
-        
-class FilteredSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    topic = serializers.IntegerField(read_only=True)
-    # create_time = serializers.DateTimeField()

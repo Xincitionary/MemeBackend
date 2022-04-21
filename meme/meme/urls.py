@@ -16,7 +16,6 @@ router.register(r'Storys',views.StoryViewSet,basename = 'Stories')
 router.register(r'StoryListByTopic', views.StoryListByTopic, basename = 'StoryListByTopic')
 router.register(r'FeedListByTopic', views.FeedListByTopic, basename = 'FeedListByTopic')
 router.register(r'topicRanking',views.TopicRankingViewSet,basename = 'topicRanking' )
-router.register(r'filteredPostList', views.FilteredPostListViewSet, basename = 'filteredPostList')
 
 
 
