@@ -3,24 +3,25 @@ import AuthContext from "../../context/AuthContext";
 import Feedlist from "../../components/Feed/Feedlist/Feedlist";
 import NavbarComp from "../../components/Header/NavbarComp";
 import PopupPost from "../../components/Popup/PopupPost";
-import Modal from "react-modal";
 import "./TopicPage.css";
 
 const TopicPage = () => {
   //   let [userInfo, setUserInfo] = useState([]);
   let [topicFeeds, setTopicFeeds] = useState([]);
   let [topicInfo, setTopicInfo] = useState([]);
-  let { authTokens } = useContext(AuthContext);
+  let { authTokens, currentTopicId } = useContext(AuthContext);
   const [postModalOpen, setPostModalOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     getTopicFeeds();
     getTopicInfo();
   }, []);
 
   let getTopicFeeds = async () => {
-    let url = "http://127.0.0.1:8000/FeedListByTopic/?topicID=1";
+    let url =
+      "http://127.0.0.1:8000/FeedListByTopic/?topicID=" +
+      String(currentTopicId);
     let response = await fetch(url, {
       method: "GET",
       headers: {
@@ -65,7 +66,7 @@ const TopicPage = () => {
             <div className="topicName">{topicInfo.topicName}</div>
 
             <div className="topicAbstract">{topicInfo.abstract}</div>
-            <div className="topicOther">By：词堂爸爸</div>
+            <div className="topicOther">By MeMe团队</div>
             <span className="topicOther">
               创建时间： {topicInfo.create_time}
             </span>
@@ -75,13 +76,6 @@ const TopicPage = () => {
             </div>
 
             <div className="buttons">
-              <button
-                type="button"
-                className="btn btn-outline-dark buttonWidth"
-              >
-                加入
-              </button>
-
               <button
                 type="button"
                 className="btn btn-dark buttonWidth"

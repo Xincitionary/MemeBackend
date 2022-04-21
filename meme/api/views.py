@@ -116,6 +116,7 @@ class FeedViewSet(viewsets.ModelViewSet):
 
 
 
+
 class CommentViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -138,7 +139,6 @@ class TopicRankingViewSet(viewsets.ModelViewSet):
 
 
 #By default in the frontend, everything should be included. 
-#REQUIRE WORK 
 class FilteredPostListViewSet(viewsets.ModelViewSet):
 
     serializer_class= FilteredSerializer
@@ -167,9 +167,3 @@ class FilteredPostListViewSet(viewsets.ModelViewSet):
     #     return queryset_Story
         return queryset
 
-
-# @api_view(['GET'])
-# def getInfo(request):
-#     queryset = UserLogin.objects.all()
-#     serializer_class = UserLoginSerializer
-#     permission_classes = [permissions.IsAuthenticated]

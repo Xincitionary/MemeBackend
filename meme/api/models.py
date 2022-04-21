@@ -75,13 +75,15 @@ class FollowTopic(models.Model):
 
 #abstract class Post; no table created.
 class Post(models.Model):
-    visibility = models.CharField(max_length=36)
-    anonymous = models.BooleanField()
-    view_count = models.IntegerField()
+    visibility = models.CharField(max_length=36, blank = True)
+    anonymous = models.BooleanField(default=1, blank = True)
+    view_count = models.IntegerField(default=0,blank = True)
     create_time = models.DateTimeField(auto_now_add=True)
-    topic = models.ForeignKey(Topic, on_delete = models.CASCADE)
-    user =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-
+    topic = models.ForeignKey(Topic, null=True, on_delete = models.CASCADE)
+    user =  models.ForeignKey(settings.AUTH_USER_MODEL,null=True, on_delete = models.CASCADE)
+    num_comments = models.IntegerField(default=0, blank = True)
+    num_shares = models.IntegerField(default=0, blank = True)
+    num_likes = models.IntegerField(default=0, blank = True)
 
     class Meta:
         ordering = ['-create_time']
@@ -91,21 +93,19 @@ class Post(models.Model):
 # #child of the topic class 
 class Story(Post):
     title = models.CharField(max_length=100)
-    num_comments = models.IntegerField(default=0)
     content = models.CharField(max_length=1000)
-    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
+    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL, related_name="parentStoryS")
     def __str__(self):
         return f"{self.id}: {self.content}"
 
 # #child of the topic class 
 class Feed(Post):
 
-    content = models.CharField(max_length=200)
-    num_comments = models.IntegerField(default=0)
-    emoji = models.IntegerField()
-    parentFeed = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
-    parentStory = models.ForeignKey(Story,null = True,blank=True, on_delete = models.SET_NULL)
-    parentIsStory = models.BooleanField
+    content = models.CharField(max_length=200, blank = True)
+    emoji = models.IntegerField(default = 0, blank = True)
+    parentFeed = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL, related_name="parentFeedF")
+    parentStory = models.ForeignKey(Story,null = True,blank=True, on_delete = models.SET_NULL, related_name="parentStoryF")
+    parentIsStory = models.BooleanField(default=None, null= True)
 
 
     def __str__(self):

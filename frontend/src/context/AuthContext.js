@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
       : null
   );
 
-  let [currentPostId, getCurrentPostId] = useState(1);
+  let [currentTopicId, getCurrentTopicId] = useState(1);
 
   let [loading, setLoading] = useState(true);
 
@@ -85,12 +85,51 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  let postFeed = async (e) => {
+    e.preventDefault();
+    let feedUrl = "http://127.0.0.1:8000/Feeds/";
+
+    let response = await fetch(feedUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        id: null,
+        emoji: 0,
+        visibility: "visible",
+        topic_id: currentTopicId,
+        content: e.target.feedContent.value,
+        visibility: 0,
+        anonymous: e.target.anonymous.value,
+        parentFeed_id: null,
+        parentStory_id: null,
+        user_id: user.id,
+        num_comments: 0,
+        num_shares: 0,
+        num_likes: 0,
+        view_count: 0,
+      }),
+    });
+
+    let data = await response.json();
+    console.log(data);
+    //we want to set it in our state (and local storage) to be used for private routes later
+    if (response.status === 200) {
+      alert("post submitted successfully! ");
+    } else {
+      alert("something went wrong");
+    }
+  };
+
   let contextData = {
     user: user,
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
-    currentPostId: currentPostId,
+    postFeed: postFeed,
+    currentTopicId: currentTopicId,
   };
 
   useEffect(() => {
@@ -108,34 +147,6 @@ export const AuthProvider = ({ children }) => {
     }, nineMinutes);
     return () => clearInterval(interval);
   }, [authTokens, loading]);
-
-  let postFeed = async (e) => {
-    e.preventDefault();
-    let postUrl = "http://127.0.0.1:8000/feeds/" + String(currentPostId);
-
-    let response = await fetch(postUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        emoji: null,
-        content: e.target.feedContent.value,
-        visibility: 0,
-        anonymous: e.target.anonymous.value,
-        view_count: 0,
-        num_comments: 0,
-      }),
-    });
-    let data = await response.json();
-    console.log(data);
-    //we want to set it in our state (and local storage) to be used for private routes later
-    if (response.status === 200) {
-      alert("post submitted successfully! ");
-    } else {
-      alert("something went wrong");
-    }
-  };
 
   return (
     <AuthContext.Provider value={contextData}>

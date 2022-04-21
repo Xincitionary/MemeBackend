@@ -22,15 +22,40 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'creator','num_followers','num_feeds','num_stories','trending', 'abstract', 'topicName', 'create_time','last_updated']
 
 class StorySerializer(serializers.HyperlinkedModelSerializer):
+    topic_id = serializers.IntegerField()
+    parent_id= serializers.IntegerField()
+    user_id= serializers.IntegerField()
     class Meta:
         model = Story
-        fields = ['id','title','content','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id','num_comments']
+        fields = ['id','title','content','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id','num_comments', 'num_shares','num_likes']
 
-    
-class FeedSerializer(serializers.HyperlinkedModelSerializer):
+    def create(self, validated_data):
+        topic = validated_data.pop('topic_id')
+        user = validated_data.pop('user_id')
+        parent = validated_data.pop('parent_id')
+
+        story_instance = Story.objects.create(**validated_data, topic_id=topic, user_id = user, parent_id = parent)
+        return story_instance
+
+
+
+class FeedSerializer(serializers.ModelSerializer):
+    topic_id = serializers.IntegerField()
+    parentFeed_id = serializers.IntegerField()
+    parentStory_id= serializers.IntegerField()
+    user_id= serializers.IntegerField()
     class Meta:
         model = Feed
-        fields =['id','emoji','content','visibility','anonymous','view_count','create_time','parentFeed_id','parentStory_id','topic_id','user_id']
+        fields= ('topic_id','id','emoji','content','visibility','anonymous','view_count','create_time','parentFeed_id','parentStory_id','user_id','num_comments', 'num_shares','num_likes')
+ 
+
+    def create(self, validated_data):
+        topic = validated_data.pop('topic_id')
+        user = validated_data.pop('user_id')
+        parentFeed = validated_data.pop('parentFeed_id')
+        parentStory =validated_data.pop('parentStory_id')
+        feed_instance = Feed.objects.create(**validated_data, topic_id=topic, user_id = user, parentFeed_id = parentFeed, parentStory_id = parentStory)
+        return feed_instance
 
     
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
