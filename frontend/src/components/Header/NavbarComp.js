@@ -5,6 +5,7 @@ import "./Navbar.css";
 
 const NavbarComp = () => {
   let { user, logoutUser } = useContext(AuthContext);
+  let state = { date: new Date() }
   return (
     <Navbar
       expand="lg"
@@ -17,6 +18,14 @@ const NavbarComp = () => {
         <Navbar.Brand className="navLogo" href="#">
           MĒMĒ
         </Navbar.Brand>
+
+        <div className="xyz">
+          {`${new Date().toLocaleString()}`}
+        </div>
+        <Navbar.Brand className="navLogo" href="#">
+          MĒMĒ
+        </Navbar.Brand>
+
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
