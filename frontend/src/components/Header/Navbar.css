@@ -7,6 +7,19 @@
   text-align: center;
 }
 
+.date{
+
+font-family: 'Source Han Sans CN';
+font-style: bold;
+font-weight: 100;
+font-size: 15px;
+line-height: 35px;
+
+color: #333333;
+
+
+}
+
 .border {
   border-bottom: 5px solid #000000;
   padding: 0;

@@ -1,7 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import React, { Component } from 'react';
 const AuthContext = createContext();
 
 export default AuthContext;
@@ -19,7 +18,9 @@ export const AuthProvider = ({ children }) => {
       : null
   );
 
-  let [currentTopicId, getCurrentTopicId] = useState(1);
+  let [currentTopicId, setCurrentTopicId] = useState(1);
+
+  let [topicFeeds, setTopicFeeds] = useState([]);
 
   let [loading, setLoading] = useState(true);
 
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        refresh: authTokens?.refresh, //incase auth token has not been updated yet
+        refresh: authTokens.refresh, //incase auth token has not been updated yet
       }),
     });
     let data = await response.json();
@@ -83,6 +84,29 @@ export const AuthProvider = ({ children }) => {
 
     if (loading) {
       setLoading(false);
+    }
+  };
+
+  let getTopicFeeds = async () => {
+    let url =
+      "http://127.0.0.1:8000/FeedListByTopic/?topicID=" +
+      String(currentTopicId);
+    let response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    });
+    let data = await response.json();
+
+    if (response.status === 200) {
+      setTopicFeeds(data.results);
+      console.log(data.results);
+    } else if (response.statusText === "Unauthorized") {
+      alert("user is unauthorized; can't load feeds");
+    } else {
+      alert("error contact eric");
     }
   };
 
@@ -118,7 +142,11 @@ export const AuthProvider = ({ children }) => {
     let data = await response.json();
     console.log(data);
     //we want to set it in our state (and local storage) to be used for private routes later
-    if (response.status === 200 || response.status === 202) {
+    if (
+      response.status === 200 ||
+      response.status === 202 ||
+      response.status === 201
+    ) {
       alert("post submitted successfully! ");
     } else {
       alert("something went wrong");
@@ -132,6 +160,8 @@ export const AuthProvider = ({ children }) => {
     logoutUser: logoutUser,
     postFeed: postFeed,
     currentTopicId: currentTopicId,
+    getTopicFeeds: getTopicFeeds,
+    topicFeeds: topicFeeds,
   };
 
   useEffect(() => {

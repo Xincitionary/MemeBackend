@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import AuthContext from "../../context/AuthContext";
 import "./Navbar.css";
+import profile from "./../../images/profile.png";
 
 const NavbarComp = () => {
   let { user, logoutUser } = useContext(AuthContext);
-  let state = { date: new Date() }
+  let state = { date: new Date() };
+
   return (
     <Navbar
       expand="lg"
@@ -19,18 +21,19 @@ const NavbarComp = () => {
           MĒMĒ
         </Navbar.Brand>
 
-        <div className="xyz">
-          {`${new Date().toLocaleString()}`}
+        <div className="date">
+          {`${state.date.getFullYear()}年 ${
+            state.date.getMonth() + 1
+          } 月  ${state.date.getDate()} 日`}
         </div>
-        <Navbar.Brand className="navLogo" href="#">
-          MĒMĒ
-        </Navbar.Brand>
-
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="#">Home</Nav.Link>
+            <Navbar.Brand href="">
+              <img src={profile} alt="React Bootstrap logo" width="30px" />
+            </Navbar.Brand>
+
             {user ? (
               <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
             ) : (

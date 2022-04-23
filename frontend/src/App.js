@@ -4,7 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import TopicPage from "./pages/Topic/TopicPage";
 import LoginPage from "./pages/Login/LoginPage";
 import PrivateRoute from "./utils/PrivateRoute";
-import React, { Component } from 'react';
+import React from "react";
 
 //nav content exist for all pages
 function App() {
