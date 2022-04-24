@@ -36,6 +36,7 @@ class UserInfo(models.Model):
     trophy = models.CharField(max_length=45)
     wechat = models.CharField(max_length=45)
     instagram = models.CharField(max_length=45)
+    profile_pic = models.CharField(max_length= 100, default = "none")
     verified = models.BooleanField()
 
     def __str__(self):
