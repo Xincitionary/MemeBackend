@@ -3,13 +3,13 @@ import AuthContext from "../../context/AuthContext";
 import "./PopupPost.css";
 
 function PopupPost({ setOpenModal }) {
-  let { postFeed, getTopicFeeds } = useContext(AuthContext);
+  let { postStory, getTopicStorys } = useContext(AuthContext);
 
   let handleOnSubmit = (event) => {
     event.preventDefault();
-    postFeed(event);
+    postStory(event);
     setOpenModal(false);
-    getTopicFeeds();
+    getTopicStorys();
   };
 
   return (
@@ -42,7 +42,7 @@ function PopupPost({ setOpenModal }) {
           <div className="form-group">
             <textarea
               className="form-control textarea"
-              id="feedContent"
+              id="storyContent"
               rows="4"
               placeholder="发布你的动态～ #纽约的地铁轶事 "
             ></textarea>

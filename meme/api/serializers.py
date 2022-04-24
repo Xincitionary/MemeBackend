@@ -27,7 +27,7 @@ class StorySerializer(serializers.HyperlinkedModelSerializer):
     user_id= serializers.IntegerField()
     class Meta:
         model = Story
-        fields = ['id','title','content','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id','num_comments', 'num_shares','num_likes']
+        fields = ['id','title','content','username','DateHappened','location','Exist','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id','num_comments', 'num_shares','num_likes']
 
     def create(self, validated_data):
         topic = validated_data.pop('topic_id')

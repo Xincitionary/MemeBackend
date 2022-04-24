@@ -84,6 +84,9 @@ class Post(models.Model):
     num_comments = models.IntegerField(default=0, blank = True)
     num_shares = models.IntegerField(default=0, blank = True)
     num_likes = models.IntegerField(default=0, blank = True)
+    location = models.CharField(max_length=100, blank = True, null = True)
+    username = models.CharField(max_length=150, blank = True, null = True, default = "匿名")
+
 
     class Meta:
         ordering = ['-create_time']
@@ -92,9 +95,23 @@ class Post(models.Model):
 
 # #child of the topic class 
 class Story(Post):
+
+    class Exist(models.TextChoices):
+        EXIST = 'EXIST','EXIST'
+        EXISTED = "EXISTED",'EXISTED'
+       
+
+    Exist = models.CharField(
+        max_length=7,
+        choices=Exist.choices,
+        default=Exist.EXIST
+    )
     title = models.CharField(max_length=100)
     content = models.CharField(max_length=1000)
+    DateHappened = models.DateTimeField(blank= True, null=True)
     parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL, related_name="parentStoryS")
+
+
     def __str__(self):
         return f"{self.id}: {self.content}"
 

@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }) => {
       : null
   );
 
-  let [currentTopicId, setCurrentTopicId] = useState(1);
+  let [currentTopicId, setCurrentTopicId] = useState(3);
 
-  let [topicFeeds, setTopicFeeds] = useState([]);
+  let [topicStorys, setTopicStorys] = useState([]);
 
   let [loading, setLoading] = useState(true);
 
@@ -87,9 +87,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  let getTopicFeeds = async () => {
+  let getTopicStorys = async () => {
     let url =
-      "http://127.0.0.1:8000/FeedListByTopic/?topicID=" +
+      "http://127.0.0.1:8000/StoryListByTopic/?topicID=" +
       String(currentTopicId);
     let response = await fetch(url, {
       method: "GET",
@@ -101,20 +101,20 @@ export const AuthProvider = ({ children }) => {
     let data = await response.json();
 
     if (response.status === 200) {
-      setTopicFeeds(data.results);
-      console.log(data.results);
+      setTopicStorys(data.results);
+      //   console.log(data.results);
     } else if (response.statusText === "Unauthorized") {
-      alert("user is unauthorized; can't load feeds");
+      alert("user is unauthorized; can't load Storys");
     } else {
       alert("error contact eric");
     }
   };
 
-  let postFeed = async (e) => {
+  let postStory = async (e) => {
     e.preventDefault();
-    let feedUrl = "http://127.0.0.1:8000/Feeds/";
+    let storyUrl = "http://127.0.0.1:8000/Storys/";
 
-    let response = await fetch(feedUrl, {
+    let response = await fetch(storyUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,17 +122,15 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({
         id: null,
-        title: "321",
-        content: e.target.feedContent.value,
+        title: e.target.title.value,
+        content: e.target.storyContent.value,
         visibility: "1",
         anonymous: e.target.anonymous.value,
-        view_count: 1,
+        view_count: 0,
         create_time: null,
-        parent_id: 1,
-        topic_id: 1,
-        user_id: 3,
-        parentFeed_id: 1,
-        parentStory_id: 1,
+        parent_id: null,
+        topic_id: currentTopicId,
+        user_id: user.id,
         num_comments: 0,
         num_shares: 0,
         num_likes: 0,
@@ -158,18 +156,23 @@ export const AuthProvider = ({ children }) => {
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
-    postFeed: postFeed,
+    postStory: postStory,
     currentTopicId: currentTopicId,
-    getTopicFeeds: getTopicFeeds,
-    topicFeeds: topicFeeds,
+    getTopicStorys: getTopicStorys,
+    topicStorys: topicStorys,
   };
 
   useEffect(() => {
     let nineMinutes = 1000 * 60 * 9;
 
-    if (loading) {
+    if (loading && localStorage.getItem("authtokens") !== null) {
+      console.log("hello");
       //if page is loaded/refreshed, get a new access token with the refresh token (i.e. access token may have expired, but refresh token has not)
       updateToken();
+    } else if (loading) {
+      //nothing in local storage direct to login page
+      //first time ever to open up browser
+      setLoading(false);
     }
 
     let interval = setInterval(() => {

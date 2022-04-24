@@ -1,4 +1,4 @@
-#topic-feeds {
+#topic-storys {
   width: 35rem;
   max-width: 90%;
   margin: 2rem auto;
@@ -79,8 +79,8 @@
 .left {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-  padding-right: 200px;
-  padding-left: 150px;
+  padding-right: 100px;
+  padding-left: 250px;
   display: flex;
   justify-content: left;
   overflow: hidden;
@@ -107,6 +107,7 @@
   }
 
   .left {
+    padding: 15%;
     margin-left: 50px;
     overflow: hidden;
     position: relative;
