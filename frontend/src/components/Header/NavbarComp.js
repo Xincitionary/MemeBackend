@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import AuthContext from "../../context/AuthContext";
 import "./Navbar.css";
-import profile from "./../../images/profile.png";
+import profile from "./../../images/profilepics/#8B0000.png";
 
 const NavbarComp = () => {
   let { user, logoutUser } = useContext(AuthContext);
@@ -22,9 +22,8 @@ const NavbarComp = () => {
         </Navbar.Brand>
 
         <div className="date">
-          {`${state.date.getFullYear()}年 ${
-            state.date.getMonth() + 1
-          } 月  ${state.date.getDate()} 日`}
+          {`${state.date.getFullYear()}年 ${state.date.getMonth() + 1
+            } 月  ${state.date.getDate()} 日`}
         </div>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

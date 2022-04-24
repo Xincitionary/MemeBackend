@@ -4,7 +4,7 @@ import "./Storyitem.css";
 import comment from "./../../../images/comment.png";
 import share from "./../../../images/share.png";
 import heart from "./../../../images/heart.png";
-import anymHead from "./../../../images/anymHead.png";
+import darkred from "./../../../images/profilepics/#8B0000.png"
 
 const Storyitem = (props) => {
   const getDate = () => {
@@ -45,7 +45,7 @@ const Storyitem = (props) => {
       <div className="row">
         <div className="story-item">
           <div>
-            <img src={anymHead} className="profile-pic" alt="profile"></img>
+            <img src={darkred} className="profile-pic" alt="profile"></img>
             <span className="username">
               {props.items.anonymous == 0 ? props.items.username : "匿名"}
             </span>
