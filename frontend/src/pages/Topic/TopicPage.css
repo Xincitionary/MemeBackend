@@ -80,7 +80,7 @@
   grid-column: 1 / 2;
   grid-row: 1 / 2;
   padding-right: 100px;
-  padding-left: 250px;
+  padding-left: 200px;
   display: flex;
   justify-content: left;
   overflow: hidden;
@@ -97,7 +97,7 @@
   overflow-y: scroll;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
   .main-page {
     width: 100%;
     display: flex;

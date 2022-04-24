@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../../../context/AuthContext";
 import "./Storyitem.css";
 import comment from "./../../../images/comment.png";
 import share from "./../../../images/share.png";
@@ -41,14 +42,13 @@ const Storyitem = (props) => {
 
   return (
     <li className="list">
-      {console.log(typeof props.items.create_time)}
-      {console.log()}
       <div className="row">
         <div className="story-item">
           <div>
             <img src={anymHead} className="profile-pic" alt="profile"></img>
-
-            <span className="username">{props.items.username}</span>
+            <span className="username">
+              {props.items.anonymous == 0 ? props.items.username : "匿名"}
+            </span>
             <span className="time"> {getTimeBefore()}</span>
           </div>
 
@@ -57,6 +57,7 @@ const Storyitem = (props) => {
               {props.items.location}-{props.items.Exist}-{getDate()}
             </div>
             {props.items.content}
+            <span className="hashtag"> #纽约市的某地有关于我的记忆"</span>
           </div>
 
           <div className="reactions">

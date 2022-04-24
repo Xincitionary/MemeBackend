@@ -10,9 +10,13 @@ const TopicPage = () => {
   //   let [userInfo, setUserInfo] = useState([]);
 
   let [topicInfo, setTopicInfo] = useState([]);
-  let { authTokens, getTopicStorys, topicStorys, currentTopicId } = useContext(
-    AuthContext
-  );
+  let {
+    authTokens,
+    getTopicStorys,
+    topicStorys,
+    currentTopicId,
+    user,
+  } = useContext(AuthContext);
   const [postModalOpen, setPostModalOpen] = useState(false);
 
   useEffect(() => {

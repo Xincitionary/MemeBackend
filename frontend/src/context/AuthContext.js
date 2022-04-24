@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   );
 
   let [currentTopicId, setCurrentTopicId] = useState(3);
-
+  let [currentTopicName, setCurrentTopicName] = useState("Null");
   let [topicStorys, setTopicStorys] = useState([]);
 
   let [loading, setLoading] = useState(true);
@@ -122,15 +122,19 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({
         id: null,
-        title: e.target.title.value,
+        title: "None",
         content: e.target.storyContent.value,
         visibility: "1",
-        anonymous: e.target.anonymous.value,
+        location: e.target.location.value,
+        DateHappened: e.target.DateHappened.value,
+        anonymous: e.target.anonymous.checked,
+        Exist: e.target.EXIST.value,
+        username: user.username,
         view_count: 0,
         create_time: null,
-        parent_id: null,
+        parent_id: 7,
         topic_id: currentTopicId,
-        user_id: user.id,
+        user_id: user.user_id,
         num_comments: 0,
         num_shares: 0,
         num_likes: 0,

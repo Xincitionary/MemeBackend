@@ -28,23 +28,36 @@ function PopupPost({ setOpenModal }) {
           <div class="form-group form-row">
             <input
               className="form-control margin-right"
-              id="title"
-              placeholder="标题 (optional)"
+              id="location"
+              placeholder="发生地点"
             />
 
             <input
               className="form-control"
-              id="location"
-              placeholder="输入地址"
+              id="DateHappened"
+              placeholder="发生时间 (yyyy-mm-dd)"
             />
           </div>
-
+          <div class="form-group form-row">
+            <select
+              class="form-select form-select"
+              aria-label=".form-select-sm example"
+              id="EXIST"
+            >
+              <option selected value="EXIST">
+                EXIST
+              </option>
+              <option value="EXISTED">EXISTED</option>
+            </select>
+          </div>
           <div className="form-group">
             <textarea
               className="form-control textarea"
               id="storyContent"
               rows="4"
-              placeholder="发布你的动态～ #纽约的地铁轶事 "
+              placeholder="发布你的动态～ (200-1000字）"
+              maxlength="1000"
+              minlength="200"
             ></textarea>
           </div>
 

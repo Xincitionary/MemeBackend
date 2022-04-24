@@ -106,9 +106,9 @@ class Story(Post):
         choices=Exist.choices,
         default=Exist.EXIST
     )
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100,null = True,blank=True)
     content = models.CharField(max_length=1000)
-    DateHappened = models.DateTimeField(blank= True, null=True)
+    DateHappened = models.CharField(max_length=15,blank= True, null=True)
     parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL, related_name="parentStoryS")
 
 
