@@ -13,7 +13,7 @@ class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = UserInfo
-        fields = ['gender','bio','school','degree','num_following','num_followers','trophy','wechat','instagram','verified','user_id']
+        fields = ['gender','bio','school','degree','profile_pic','num_following','num_followers','trophy','wechat','instagram','verified','user_id']
         # depth = 1
 
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
