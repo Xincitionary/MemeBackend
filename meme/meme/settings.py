@@ -31,8 +31,8 @@ SECRET_KEY = 'django-insecure-ubj4fw2zeobrm=n+fj4&88f0o&!b10&y=b=ry(4+%^sj2n4##5
 
 # # SECURITY WARNING: don't run with debug turned on in production!
 
-# DEBUG = True
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = True
+# DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ['*']
 
@@ -204,5 +204,5 @@ SIMPLE_JWT = {
 # CORS_ALLOWED_ORIGINS = []
 CORS_ALLOW_ALL_ORIGINS = True
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_URL = "/static/"
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
