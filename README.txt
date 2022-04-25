@@ -10,7 +10,4 @@ pip install -r requirements.txt
 cd meme
 python3 manage.py runserver
 
-#Navigate to memebackend/frontend
-npm run
-
 Note: ask Eric to get sql credential 
