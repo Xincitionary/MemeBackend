@@ -14,7 +14,7 @@ from pathlib import Path
 import pymysql 
 import os
 from datetime import timedelta
-
+from django.core.management.utils import get_random_secret_key
 
 
 pymysql.install_as_MySQLdb()
@@ -27,11 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-ubj4fw2zeobrm=n+fj4&88f0o&!b10&y=b=ry(4+%^sj2n4##5'
+# SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
+# DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -202,4 +205,4 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 STATIC_URL = "/static/"
-<^>STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")<^>
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
