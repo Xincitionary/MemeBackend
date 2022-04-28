@@ -22,7 +22,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-
 #takes a list of http actions we can send to this view
 @api_view(['GET'])
 def getRoutes(request):
@@ -56,8 +55,10 @@ class UserInfoViewSet(viewsets.ModelViewSet):
     serializer_class = UserInfoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
-
+class likeStoryViewSet(viewsets.ModelViewSet):
+    queryset = likeStory.objects.all()
+    serializer_class = StoryLikeSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class StoryViewSet(viewsets.ModelViewSet):
@@ -68,7 +69,13 @@ class StoryViewSet(viewsets.ModelViewSet):
     serializer_class = StorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
+    # def patch(self, request, pk):
+    #         story_object = self.get_object(pk)
+    #         serializer = StorySerializer(story_object, data=request.data, partial=True) # set partial=True to update a data partially
+    #         if serializer.is_valid():
+    #             serializer.save()
+    #             return JsonResponse(code=201, data=serializer.data)
+    #         return JsonResponse(code=400, data="wrong parameters")
 
 class StoryListByTopic(viewsets.ModelViewSet):
 
@@ -85,6 +92,40 @@ class StoryListByTopic(viewsets.ModelViewSet):
         if topicID is not None:
             queryset = queryset.filter(topic = topicID)
         return queryset
+
+
+class StoryLikedByUser(viewsets.ModelViewSet):
+    serializer_class = StoryLikeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = likeStory.objects.all()
+        userID = self.request.query_params.get('userID')
+        if userID is not None:
+            queryset = queryset.filter(user = userID)
+        return queryset
+
+
+
+class StoryLikedByStory(viewsets.ModelViewSet):
+    serializer_class = StoryLikeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = likeStory.objects.all()
+        storyID = self.request.query_params.get('storyID')
+        if storyID is not None:
+            queryset = queryset.filter(story = storyID)
+        return queryset
+
 
 
 class FeedListByTopic(viewsets.ModelViewSet):

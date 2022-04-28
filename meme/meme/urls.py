@@ -16,6 +16,9 @@ router.register(r'Storys',views.StoryViewSet,basename = 'Stories')
 router.register(r'StoryListByTopic', views.StoryListByTopic, basename = 'StoryListByTopic')
 router.register(r'FeedListByTopic', views.FeedListByTopic, basename = 'FeedListByTopic')
 router.register(r'topicRanking',views.TopicRankingViewSet,basename = 'topicRanking' )
+router.register(r'StoryLikedByUser',views.StoryLikedByUser,basename = 'StoryLikedByUser' )
+router.register(r'StoryLikedByStory',views.StoryLikedByStory,basename = 'StoryLikedByStory' )
+router.register(r'likeStoryViewSet',views.likeStoryViewSet, basename='likeStoryViewSet')
 
 
 
