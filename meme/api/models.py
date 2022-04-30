@@ -1,7 +1,6 @@
 from unittest.mock import DEFAULT
 from django.db import models
 from django.contrib.auth.models import AbstractUser #,PermissionMixin
-
 from django.conf import settings
 # from datetime import datetime
 
@@ -10,6 +9,7 @@ from django.conf import settings
 #blank and null: https://stackoverflow.com/questions/8609192/what-is-the-difference-between-null-true-and-blank-true-in-django
 
 # Create your models here.
+
 class UserLogin(AbstractUser):
     pass
 
@@ -17,8 +17,6 @@ class UserLogin(AbstractUser):
         return f"{self.id}: {self.username}"
 
 
-
-#
 class UserInfo(models.Model):
     id = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -96,7 +94,6 @@ class Post(models.Model):
 
 # #child of the topic class 
 class Story(Post):
-
     class Exist(models.TextChoices):
         EXIST = 'EXIST','EXIST'
         EXISTED = "EXISTED",'EXISTED'
@@ -111,10 +108,11 @@ class Story(Post):
     content = models.CharField(max_length=1000)
     DateHappened = models.CharField(max_length=15,blank= True, null=True)
     parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL, related_name="parentStoryS")
-
+    # liked_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likedByUser')
 
     def __str__(self):
         return f"{self.id}: {self.content}"
+
 
 # #child of the topic class 
 class Feed(Post):
@@ -141,6 +139,22 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.id}: {self.content}"
+
+
+class StoryComment(models.Model):
+    content = models.CharField(max_length=300)
+    create_time =models.DateTimeField(auto_now_add=True)
+    emoji = models.IntegerField()
+    anonymous = models.BooleanField(default=1, blank = True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    username = models.CharField(max_length=150, blank = True, null = True, default = "匿名")
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
+
+    def __str__(self):
+        return f"{self.id}: {self.content}"
+    class Meta:
+        ordering = ['-create_time']
 
 #Topics that are yet to added.
 class TopicRanking(models.Model):
@@ -176,3 +190,8 @@ class invite_code(models.Model):
 
     def __str__(self):
         return f"{self.id}: {self.taken}"
+
+class likeStory(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="userLiking", on_delete = models.CASCADE)
+    story = models.ForeignKey(Story, related_name="storyLiked", on_delete = models.CASCADE)
+

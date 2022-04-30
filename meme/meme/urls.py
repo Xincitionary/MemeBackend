@@ -11,11 +11,16 @@ router.register(r'userLogin', views.UserLoginViewSet, basename = 'userlogin')
 router.register(r'userInfo', views.UserInfoViewSet, basename = 'userinfo')
 router.register(r'Topics', views.TopicViewSet, basename = 'Topics')
 router.register(r'Comments', views.CommentViewSet, basename='comments')
+router.register(r'StoryComments', views.StoryCommentViewSet, basename='StoryComments')
+
 router.register(r'Feeds',views.FeedViewSet,basename = 'Feeds')
 router.register(r'Storys',views.StoryViewSet,basename = 'Stories')
 router.register(r'StoryListByTopic', views.StoryListByTopic, basename = 'StoryListByTopic')
 router.register(r'FeedListByTopic', views.FeedListByTopic, basename = 'FeedListByTopic')
 router.register(r'topicRanking',views.TopicRankingViewSet,basename = 'topicRanking' )
+router.register(r'StoryLikedByUser',views.StoryLikedByUser,basename = 'StoryLikedByUser' )
+router.register(r'StoryLikedByStory',views.StoryLikedByStory,basename = 'StoryLikedByStory' )
+router.register(r'likeStoryViewSet',views.likeStoryViewSet, basename='likeStoryViewSet')
 
 
 
