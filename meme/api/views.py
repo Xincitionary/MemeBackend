@@ -167,6 +167,24 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class StoryCommentViewSet(viewsets.ModelViewSet):
+
+    queryset = StoryComment.objects.all()
+    serializer_class = StoryCommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = StoryComment.objects.all()
+        storyID = self.request.query_params.get('storyID')
+        if storyID is not None:
+            queryset = queryset.filter(story = storyID)
+        return queryset
+
+
 
 class TopicRankingViewSet(viewsets.ModelViewSet):
 

@@ -140,6 +140,22 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.id}: {self.content}"
 
+
+class StoryComment(models.Model):
+    content = models.CharField(max_length=300)
+    create_time =models.DateTimeField(auto_now_add=True)
+    emoji = models.IntegerField()
+    anonymous = models.BooleanField(default=1, blank = True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    username = models.CharField(max_length=150, blank = True, null = True, default = "匿名")
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL)
+
+    def __str__(self):
+        return f"{self.id}: {self.content}"
+    class Meta:
+        ordering = ['-create_time']
+
 #Topics that are yet to added.
 class TopicRanking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='topicCreator')

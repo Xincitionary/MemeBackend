@@ -78,6 +78,26 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id','create_time','content','emoji','parent_id','user_id','feed_id']
 
 
+
+class StoryCommentSerializer(serializers.HyperlinkedModelSerializer):
+    user_id = serializers.IntegerField()
+    story_id = serializers.IntegerField()
+    parent_id = serializers.IntegerField()
+    class Meta:
+        model = StoryComment
+        fields = ['id','create_time','content','anonymous','emoji','parent_id','user_id','story_id', 'username']
+
+
+    def create(self, validated_data):
+        user = validated_data.pop('user_id')
+        parent = validated_data.pop('parent_id')
+        story = validated_data.pop('story_id')
+        story_instance = StoryComment.objects.create(**validated_data, story_id = story, user_id = user, parent_id = parent)
+        
+        return story_instance
+
+
+
 class TopicRankingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TopicRanking
