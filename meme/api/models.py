@@ -108,6 +108,10 @@ class Story(Post):
     content = models.CharField(max_length=1000)
     DateHappened = models.CharField(max_length=15,blank= True, null=True)
     parent = models.ForeignKey('self',null = True,blank=True, on_delete = models.SET_NULL, related_name="parentStoryS")
+    lon = models.DecimalField(max_digits=9, decimal_places=6, null= True, blank = True)
+    lat = models.DecimalField(max_digits=9, decimal_places=6,null= True, blank = True)
+    popup_note = models.CharField(max_length=300, null= True, blank = True )
+
     # liked_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likedByUser')
 
     def __str__(self):
@@ -155,6 +159,8 @@ class StoryComment(models.Model):
         return f"{self.id}: {self.content}"
     class Meta:
         ordering = ['-create_time']
+
+
 
 #Topics that are yet to added.
 class TopicRanking(models.Model):
