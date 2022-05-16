@@ -1,11 +1,30 @@
 from pyexpat import model
 from api.models  import *
 from rest_framework import serializers
+from django.contrib.auth import get_user_model 
+
 
 class UserLoginSerializer(serializers.HyperlinkedModelSerializer):
+    password = serializers.CharField(write_only=True)
+    
+    def create(self, validated_data):
+        user = UserLogin.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password'],
+            email = validated_data['email'],
+            gender = validated_data['gender'],
+            social_media = validated_data['social_media']
+        )
+
+        return user
     class Meta:
         model = UserLogin
-        fields = ['id','username','password','last_login','date_joined','email']
+        fields = ['id','username','password','last_login','date_joined','email','gender', 'social_media']
+
+        # extra_kwargs ={
+        #     'password':{'write_only':True}
+        # }
+
 
 
 class UserInfoSerializer(serializers.HyperlinkedModelSerializer):

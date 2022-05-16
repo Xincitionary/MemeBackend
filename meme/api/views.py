@@ -8,6 +8,15 @@ from .serializers import *
 from django.http import JsonResponse
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import CreateModelMixin
+from django.contrib.auth import get_user_model
+
+
+class CreateUserView(CreateModelMixin, GenericViewSet):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserLoginSerializer
+    permission_classes =  [permissions.AllowAny]
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
