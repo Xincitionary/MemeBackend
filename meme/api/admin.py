@@ -11,12 +11,13 @@ from .forms import UserLoginCreationForm, UserLoginChangeForm
 
 from django.apps import apps
 
+
+UserAdmin.fieldsets += ('Custom fields set', {'fields': ('gender', 'social_media')}),
 class CustomUserAdmin(UserAdmin):
     add_form = UserLoginCreationForm
     form = UserLoginChangeForm
     model = UserLogin
-
-    list_display = ["email", "username"]
+    list_display = ["email", "username","gender","social_media"]
 
 admin.site.register(UserLogin, CustomUserAdmin)
 
