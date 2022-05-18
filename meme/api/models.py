@@ -11,7 +11,9 @@ from django.conf import settings
 # Create your models here.
 
 class UserLogin(AbstractUser):
-    pass
+   
+    gender = models.BooleanField(default=True)
+    social_media = models.CharField(max_length=45, null= True, blank = True)
 
     def __str__(self):
         return f"{self.id}: {self.username}"

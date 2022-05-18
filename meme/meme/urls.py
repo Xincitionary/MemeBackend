@@ -7,6 +7,7 @@ from api import views
 
 router = routers.DefaultRouter()
 
+router.register(r'createuser', views.CreateUserView, basename = 'createUser')
 router.register(r'userLogin', views.UserLoginViewSet, basename = 'userlogin')
 router.register(r'userInfo', views.UserInfoViewSet, basename = 'userinfo')
 router.register(r'Topics', views.TopicViewSet, basename = 'Topics')
