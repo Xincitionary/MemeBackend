@@ -69,6 +69,20 @@ class likeStoryViewSet(viewsets.ModelViewSet):
     serializer_class = StoryLikeSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class NotificationViewSet(viewsets.ModelViewSet):
+    serializer_class =NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Notification.objects.all().filter(seen = False)
+        userID = self.request.query_params.get('userID')
+        if userID is not None:
+            queryset = queryset.filter(user = userID)
+        return queryset
+          
 
 class StoryViewSet(viewsets.ModelViewSet):
     """
@@ -77,14 +91,6 @@ class StoryViewSet(viewsets.ModelViewSet):
     queryset = Story.objects.all()
     serializer_class = StorySerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    # def patch(self, request, pk):
-    #         story_object = self.get_object(pk)
-    #         serializer = StorySerializer(story_object, data=request.data, partial=True) # set partial=True to update a data partially
-    #         if serializer.is_valid():
-    #             serializer.save()
-    #             return JsonResponse(code=201, data=serializer.data)
-    #         return JsonResponse(code=400, data="wrong parameters")
 
 class StoryListByTopic(viewsets.ModelViewSet):
 

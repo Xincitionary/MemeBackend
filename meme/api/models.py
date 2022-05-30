@@ -203,3 +203,27 @@ class likeStory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="userLiking", on_delete = models.CASCADE)
     story = models.ForeignKey(Story, related_name="storyLiked", on_delete = models.CASCADE)
 
+class Notification(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="userNotified", on_delete = models.CASCADE)
+    notifier = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="userNotifying", on_delete = models.CASCADE)
+    username = models.CharField(max_length=50, null= True, blank = True)
+    profile_pic = models.IntegerField()
+    story = models.ForeignKey(Story, related_name="storyNotifying", on_delete = models.CASCADE)
+    seen =  models.BooleanField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    message = models.CharField(max_length=300, null = True, blank = True)
+
+    class Action(models.TextChoices):
+        LIKED= 'LIKED','LIKED'
+        COMMENTED = "COMMENTED",'COMMENTED'
+        REPLIED = "REPLIED","REPLIED"
+       
+
+    Action = models.CharField(
+        max_length=10,
+        choices=Action.choices,
+        default=Action.LIKED
+    )
+    class Meta:
+        ordering = ['-create_time']
+ 

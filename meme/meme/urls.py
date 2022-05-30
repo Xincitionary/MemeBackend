@@ -13,7 +13,7 @@ router.register(r'userInfo', views.UserInfoViewSet, basename = 'userinfo')
 router.register(r'Topics', views.TopicViewSet, basename = 'Topics')
 router.register(r'Comments', views.CommentViewSet, basename='comments')
 router.register(r'StoryComments', views.StoryCommentViewSet, basename='StoryComments')
-
+router.register(r'Notifications',views.NotificationViewSet, basename = 'notifications')
 router.register(r'Feeds',views.FeedViewSet,basename = 'Feeds')
 router.register(r'Storys',views.StoryViewSet,basename = 'Stories')
 router.register(r'StoryListByTopic', views.StoryListByTopic, basename = 'StoryListByTopic')

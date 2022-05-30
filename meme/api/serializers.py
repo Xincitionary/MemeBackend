@@ -26,9 +26,14 @@ class UserLoginSerializer(serializers.HyperlinkedModelSerializer):
         # }
 
 
+class NotificationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['id', 'user_id','profile_pic','create_time','message','seen','story_id','username','Action']
+
+
 
 class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = UserInfo
         fields = ['gender','bio','school','degree','profile_pic','num_following','num_followers','trophy','wechat','instagram','verified','user_id']
