@@ -58,6 +58,7 @@ class Topic(models.Model):
     trending = models.BooleanField()
     topicName = models.CharField(max_length = 45)
     abstract = models.CharField(max_length=200)
+    button_prompt = models.CharField(max_length = 45, null = True, blank = True)
 
     def __str__(self):
         ret = "the topic title is " + self.topicName

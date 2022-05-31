@@ -42,7 +42,7 @@ class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Topic
-        fields = ['id', 'creator','num_followers','num_feeds','num_stories','trending', 'abstract', 'topicName', 'create_time','last_updated']
+        fields = ['id', 'creator','num_followers','num_feeds','num_stories','trending', 'abstract', 'topicName', 'button_prompt','create_time','last_updated']
 
 class StorySerializer(serializers.HyperlinkedModelSerializer):
     topic_id = serializers.IntegerField()
