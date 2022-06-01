@@ -59,6 +59,9 @@ class Topic(models.Model):
     topicName = models.CharField(max_length = 45)
     abstract = models.CharField(max_length=200)
     button_prompt = models.CharField(max_length = 45, null = True, blank = True)
+    member_action = models.CharField(max_length = 45, null = True, blank = True)
+    topic_color = models.CharField(max_length = 10, null = True, blank = True)
+    requires_address = models.BooleanField(default = True, null = True, blank= True)
 
     def __str__(self):
         ret = "the topic title is " + self.topicName
