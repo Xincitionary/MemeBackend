@@ -13,13 +13,14 @@ class UserLoginSerializer(serializers.HyperlinkedModelSerializer):
             password=validated_data['password'],
             email = validated_data['email'],
             gender = validated_data['gender'],
-            social_media = validated_data['social_media']
+            social_media = validated_data['social_media'],
+            profile_pic = validated_data['profile_pic']
         )
 
         return user
     class Meta:
         model = UserLogin
-        fields = ['id','username','password','last_login','date_joined','email','gender', 'social_media']
+        fields = ['id','username','profile_pic','password','last_login','date_joined','email','gender', 'social_media']
 
         # extra_kwargs ={
         #     'password':{'write_only':True}
@@ -27,13 +28,21 @@ class UserLoginSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class NotificationSerializer(serializers.HyperlinkedModelSerializer):
+    notifier= serializers.PrimaryKeyRelatedField(queryset=UserLogin.objects.all(), many=False)
+    story_id = serializers.IntegerField()
+    user_id= serializers.IntegerField()
+    
+    def create(self, validated_data):
+        return Notification.objects.create(**validated_data)
+    # notifier =serializers.IntegerField()
     class Meta:
         model = Notification
-        fields = ['id', 'user_id','profile_pic','create_time','message','seen','story_id','username','Action']
+        fields = ['id', 'user_id','notifier','profile_pic','create_time','message','seen','story_id','username','Action']
 
 
 
 class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
+    
     class Meta:
         model = UserInfo
         fields = ['gender','bio','school','degree','profile_pic','num_following','num_followers','trophy','wechat','instagram','verified','user_id']
@@ -42,7 +51,7 @@ class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Topic
-        fields = ['id', 'creator','member_action','topic_color','requires_address','num_followers','num_feeds','num_stories','trending', 'abstract', 'topicName', 'button_prompt','create_time','last_updated']
+        fields = ['id', 'creator','member_action','placeholder_txt','topic_color','requires_address','num_followers','num_feeds','num_stories','trending', 'abstract', 'topicName', 'button_prompt','create_time','last_updated']
 
 class StorySerializer(serializers.HyperlinkedModelSerializer):
     topic_id = serializers.IntegerField()
@@ -51,7 +60,7 @@ class StorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Story
-        fields = ['id','title','content','username','DateHappened','location','lon','lat','popup_note','Exist','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id','num_comments', 'num_shares','num_likes']
+        fields = ['id','title','content','username', 'DateHappened','location','lon','lat','popup_note','Exist','visibility','anonymous','view_count','create_time','parent_id','topic_id','user_id','num_comments', 'num_shares','num_likes']
 
 
     def create(self, validated_data):

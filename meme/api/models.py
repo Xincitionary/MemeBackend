@@ -14,6 +14,7 @@ class UserLogin(AbstractUser):
    
     gender = models.BooleanField(default=True)
     social_media = models.CharField(max_length=45, null= True, blank = True)
+    profile_pic =  models.CharField(max_length=30, null= True, blank = True)
 
     def __str__(self):
         return f"{self.id}: {self.username}"
@@ -62,6 +63,7 @@ class Topic(models.Model):
     member_action = models.CharField(max_length = 45, null = True, blank = True)
     topic_color = models.CharField(max_length = 10, null = True, blank = True)
     requires_address = models.BooleanField(default = True, null = True, blank= True)
+    placeholder_txt = models.CharField(max_length=100, null= True, blank = True )
 
     def __str__(self):
         ret = "the topic title is " + self.topicName
@@ -117,6 +119,7 @@ class Story(Post):
     lon = models.DecimalField(max_digits=9, decimal_places=6, null= True, blank = True)
     lat = models.DecimalField(max_digits=9, decimal_places=6,null= True, blank = True)
     popup_note = models.CharField(max_length=300, null= True, blank = True )
+
 
     # liked_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likedByUser')
 
