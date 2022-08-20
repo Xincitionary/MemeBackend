@@ -1,3 +1,5 @@
+Frontend: https://github.com/Xincitionary/MemeFrontend
+
 To run the code:
 
 # Create a virtual environment to isolate our package dependencies locally
